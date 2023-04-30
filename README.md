@@ -1,57 +1,80 @@
-# Ant Design Pro
+# <img src="./md_src/logo.png" alt="image-20230430233918664" style="zoom:15%;" />Lepton Music NFT Demo Site
 
-This project is initialized with [Ant Design Pro](https://pro.ant.design). Follow is the quick guide for how to use.
+## Who are we?
+
+**LeptonMusic is China's first “listen to earn” interactive music platform for low-threshold music copyright publication, unconditional copyright security, and maximum revenue generation for the new generation of Asian musicians. Lepton replaces the traditional copyright model with the Web 3.0 de-centralized model, and all royalty profits go to artists and listeners. The audience can listen to earn LeptonMusicCoin (LMC) and Non-Fungible Token (NFT). Based on Blockchain and Quantum Signature Technology, LeptonMusic creates a complete and vigorous system of music digital assets, including standardized music creation, publication, promotion, copyright double-protection, and trading, and benefits music industry from cryptocurrency and decentralized finance.**
+
+**Here comes our ticket NFT program.**
+
+## Some Thrilling Results
+
+🌈**A bridge from the participators and the host.**
+
+- 📓**Authority** 
+- 🎨**Collectability**
+- 🚀**Empowerment**
+
+![image-20230430170016516](./md_src/main_fig.png)
+
+![image-20230430233733235](./md_src/mian_fig2.png)
+
+### 📹Demo Display
+
+[video](https://drive.google.com/file/d/1MxQAHCtE_ujIkh0tsBN1U37QEue5s0pl/view?usp=sharing)
+
+### 👨🏻‍💻Project Setting
+
+```markdown
+
 
 ## Environment Prepare
 
 Install `node_modules`:
 
-```bash
+
 npm install
-```
+
 
 or
 
-```bash
+
 yarn
-```
 
-## Provided Scripts
-
-Ant Design Pro provides some useful script to help you quick start and build with web project, code style check and test.
-
-Scripts provided in `package.json`. It's safe to modify or add additional script:
 
 ### Start project
 
-```bash
+
 npm start
-```
+
 
 ### Build project
 
-```bash
+
 npm run build
-```
+
 
 ### Check code style
 
-```bash
+
 npm run lint
-```
+
 
 You can also use script to auto fix some lint error:
 
-```bash
+
 npm run lint:fix
-```
+
 
 ### Test code
 
-```bash
+
 npm test
+
+
 ```
 
-## More
 
-You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in our [github](https://github.com/ant-design/ant-design-pro).
+
+## Contact Us
+
+[Lepton DAO](LeptonDao@163.com)
