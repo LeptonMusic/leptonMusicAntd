@@ -242,8 +242,10 @@ const Home: React.FC = () => {
     //   message.error('You can only upload JPG/PNG file!');
     // }
     const isLt2M = file.size / 1024 / 1024 < 2;
+    setLoading(true);
     if (!isLt2M) {
       message.error('Image must smaller than 2MB!');
+      setLoading(false);
     }
     return isLt2M;
   };
@@ -259,7 +261,6 @@ const Home: React.FC = () => {
     multiple: true,
     action: 'https://api.pinata.cloud/pinning/pinFileToIPFS',
     accept: 'image/*',
-    maxCount: '1',
     beforeUpload: beforeUpload,
     onChange(info) {
       setLoading(true);
@@ -272,11 +273,6 @@ const Home: React.FC = () => {
         const ipfsHash = info.file.response.IpfsHash;
         const myNFTUrl = 'https://orange-frozen-panda-426.mypinata.cloud/ipfs/' + ipfsHash;
         console.log(myNFTUrl);
-        // setTimeout(() => {
-        //   setLoading(false);
-        //   message.success(`恭喜，NFT铸造成功！请前往钱包查看您的藏品!`);
-        // }, 3000);
-
         mintNFT(myNFTUrl);
 
       } else if (status === 'error') {
@@ -286,9 +282,10 @@ const Home: React.FC = () => {
         setLoading(false);
       }
     },
-    onDrop(e) {
-      console.log('Dropped files', e.dataTransfer.files);
-    },
+    // onDrop(e) {
+    //   setLoading(true);
+    //   console.log('Dropped files', e.dataTransfer.files);
+    // },
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -470,11 +467,11 @@ const Home: React.FC = () => {
             <p className="ant-upload-drag-icon">
               <InboxOutlined />
             </p>
-            <p className="ant-upload-text">Click or drag file to this area to upload</p>
-            <p className="ant-upload-hint">
+            <p className="ant-upload-text">点击该区域选择图片上传</p>
+            {/* <p className="ant-upload-hint">
               Support for a single or bulk upload. Strictly prohibited from uploading company data or other
               banned files.
-            </p>
+            </p> */}
           </Dragger>
         </Spin>
       </Modal>
