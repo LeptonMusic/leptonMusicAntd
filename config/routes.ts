@@ -24,7 +24,7 @@ export default [
   },
   {
     path: '/home',
-    // name: 'home',
+    name: '',
     // icon: 'smile',
     component: './Home/Home',
     // routes: [

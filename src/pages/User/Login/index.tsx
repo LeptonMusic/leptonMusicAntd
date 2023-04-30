@@ -22,7 +22,7 @@ import Settings from '../../../../config/defaultSettings';
 import React, { useState } from 'react';
 import { flushSync } from 'react-dom';
 
-import logoStr from '../../Image/lepton_logo.jpg'
+import logoStr from '../../Image/lepton_logo.svg'
 const ActionIcons = () => {
   const langClassName = useEmotionCss(({ token }) => {
     return {

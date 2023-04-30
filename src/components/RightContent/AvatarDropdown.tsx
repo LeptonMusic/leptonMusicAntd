@@ -2,12 +2,13 @@ import { outLogin } from '@/services/ant-design-pro/api';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 import { useEmotionCss } from '@ant-design/use-emotion-css';
 import { history, useModel } from '@umijs/max';
-import { Spin, Button } from 'antd';
+import { Spin, Button, Drawer } from 'antd';
 import { stringify } from 'querystring';
 import type { MenuInfo } from 'rc-menu/lib/interface';
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { flushSync } from 'react-dom';
 import HeaderDropdown from '../HeaderDropdown';
+import { Contract, ethers, Provider } from 'ethers';
 
 export type GlobalHeaderRightProps = {
   menu?: boolean;
@@ -72,6 +73,28 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
     [setInitialState],
   );
 
+  const [mnemonic, setMnemonic] = useState<string | undefined>()
+
+  //drawer 
+  const [open, setOpen] = useState(false);
+  const [childrenDrawer, setChildrenDrawer] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
+
+  const showChildrenDrawer = () => {
+    setChildrenDrawer(true);
+  };
+
+  const onChildrenDrawerClose = () => {
+    setChildrenDrawer(false);
+  };
+
   const loading = (
     // <span className={actionClassName}>
     //   <Spin
@@ -82,15 +105,19 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
     //     }}
     //   />
     // </span>
-    <Button
-      onClick={() => {
-        history.replace({
-          pathname: '/user/login',
-        });
-      }}
-    >
-      Register/Login
-    </Button>
+
+    <div>
+      <Button
+        onClick={() => {
+          // history.replace({
+          //   pathname: '/user/login',
+          // });
+          setOpen(true);
+        }}
+      >
+        web3钱包创建
+      </Button>
+    </div>
   );
 
   if (!initialState) {
@@ -106,20 +133,20 @@ export const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu, childre
   const menuItems = [
     ...(menu
       ? [
-          {
-            key: 'center',
-            icon: <UserOutlined />,
-            label: '个人中心',
-          },
-          {
-            key: 'settings',
-            icon: <SettingOutlined />,
-            label: '个人设置',
-          },
-          {
-            type: 'divider' as const,
-          },
-        ]
+        {
+          key: 'center',
+          icon: <UserOutlined />,
+          label: '个人中心',
+        },
+        {
+          key: 'settings',
+          icon: <SettingOutlined />,
+          label: '个人设置',
+        },
+        {
+          type: 'divider' as const,
+        },
+      ]
       : []),
     {
       key: 'logout',
