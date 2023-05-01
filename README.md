@@ -20,7 +20,7 @@
 
 ### 📹Demo Display
 
-[video](https://drive.google.com/file/d/1MxQAHCtE_ujIkh0tsBN1U37QEue5s0pl/view?usp=sharing)
+![video](./md_src/demo.gif)
 
 ### 👨🏻‍💻Project Setting
 
