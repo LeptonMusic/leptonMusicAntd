@@ -24,7 +24,7 @@ export default [
   },
   {
     path: '/home',
-    name: '',
+    name: '主页',
     // icon: 'smile',
     component: './Home/Home',
     // routes: [
