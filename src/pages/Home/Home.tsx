@@ -1,14 +1,15 @@
 import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { useModel, history } from '@umijs/max';
-import { Button, Card, theme, Timeline, Image, List, Drawer, Upload, message, Spin, Modal, Input } from 'antd';
+import { Button, Card, theme, Timeline, Image, List, Drawer, Upload, message, Spin, Modal, Input, Tabs, Row } from 'antd';
 import { React, useState } from 'react';
 import { Contract, ethers, Provider } from 'ethers';
-import { InboxOutlined } from '@ant-design/icons';
+import { BorderOutlined, InboxOutlined, UnderlineOutlined } from '@ant-design/icons';
 import { Conflux, Wallet, Drip } from 'js-conflux-sdk';
 import { HDWallet } from '@conflux-dev/hdwallet';
 import { jsbi } from 'jsbi'
 
 import type { UploadProps } from 'antd';
+import type { TabsProps } from 'antd';
 
 import { LEPTON_NFT_ABI, LEPTON_NFT_ADDRESS } from '../../../config/leptonNFT';
 
@@ -46,56 +47,6 @@ import leptonTicket from '../Image/lepton_ticket.png'
 import logo from '../Image/lepton_logo.svg'
 
 const { Dragger } = Upload;
-
-/**
- * 每个单独的卡片，为了复用样式抽成了组件
- * @param param0
- * @returns
- */
-const ImageTextCard: React.FC<{
-  title: string;
-  image: string;
-  href: string;
-}> = ({ title, href, image }) => {
-  const { useToken } = theme;
-
-  const { token } = useToken();
-
-  return (
-    <div
-      style={{
-        // backgroundColor: token.colorBgContainer,
-        // boxShadow: token.boxShadow,
-        //borderRadius: '8px',
-        //fontSize: '14px',
-        // color: token.colorTextSecondary,
-        // lineHeight: '22px',
-        // padding: '16px 19px',
-        minWidth: '220px',
-        flex: 1,
-      }}
-    // onClick={() => {
-    //   window.open('https://pro.ant.design/docs/getting-started');
-    // }}
-    >
-      <Image
-        width={200}
-        //src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-        src={image}
-        preview={false}
-      />
-      <div
-        style={{
-          fontSize: '20px',
-          color: '#ffffff',
-          marginTop: 20,
-        }}
-      >
-        {title}
-      </div>
-    </div>
-  );
-};
 
 const data = [
   {
@@ -328,15 +279,21 @@ const Home: React.FC = () => {
   const importWalletOk = () => {
     setIsImportWallet(false)
     console.log('inputPrivateKey:', inputPrivateKey);
+    if (!(inputPrivateKey.startsWith('0x'))) {
+      const key = '0x' + inputPrivateKey;
+      setInputPrivateKey(key);
+      console.log(inputPrivateKey);
+    }
     try {
       const account = conflux.wallet.addPrivateKey(inputPrivateKey);
       setWalletTitle('我的钱包');
       setCfxAddress(account.address);
       setMnemonic(inputPrivateKey);
+      message.success('导入成功！');
     } catch (error) {
       message.error('私钥格式不正确，导入失败！');
     }
-    message.success('导入成功！');
+    
   }
 
   const importWalletCancel = () => {
@@ -391,14 +348,40 @@ const Home: React.FC = () => {
         position: 'float',
         background: '#030812',
       }}
+      extra={
+        <Button
+          style={{
+            fontSize: '18px',
+            // background: '#030812'
+          }}
+          onClick={() => {
+            if (walletTitle == '我的钱包') {
+              setMyWalletOpen(true);
+              getWalletInfo();
+            } else {
+              setOpen(true);
+            }
+          }}
+        >
+          {walletTitle}
+        </Button>
+      }
     >
       <div
         style={{
+          marginTop: '-55px',
+          color: '#ffffff',
+          marginBottom: '30px',
+          marginLeft: '40px',
+          fontSize: '20px',
+          fontWeight: 'bold',
+        }}
+      >主页</div>
+
+      {/* <div
+        style={{
           color: '#ffffff',
           marginTop: '-20px',
-          // marginRight: '10px',
-          // flex: 1,
-          // display: 'flex',
           alignItems: 'center',
           background: '#fabced',
         }}
@@ -432,35 +415,36 @@ const Home: React.FC = () => {
             flex: 1,
             display: 'flex',
             alignItems: 'center',
-            marginRight: '40px',
-            marginLeft: '40px',
+            marginRight: '20px',
+            marginLeft: '20px',
             float: 'right',
           }}
         >
 
           <div
             style={{
-              marginLeft: '40px',
+              marginLeft: '20px',
+              flex: 1,
             }}
           >
             铸造NFT
           </div>
           <div
             style={{
-              marginLeft: '40px',
+              marginLeft: '20px',
             }}
           >
             音乐活动
           </div>
           <div
             style={{
-              marginLeft: '40px',
+              marginLeft: '20px',
             }}
           >
             关于我们
           </div>
         </div>
-      </div>
+      </div> */}
       <Modal title="上传您的图片铸造NFT" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <Spin spinning={loading} tip='NFT铸造中'>
           <Dragger {...props}>
@@ -481,13 +465,14 @@ const Home: React.FC = () => {
         title="我的钱包"
         placement="right"
         onClose={onMyWalletClose}
+        width={320}
         open={myWalletOpen}
         closable={false}
         extra={
           <Button
-          onClick={() => {
-            setBackupWallet(true);
-          }}
+            onClick={() => {
+              setBackupWallet(true);
+            }}
           >
             备份钱包
           </Button>
@@ -582,7 +567,7 @@ const Home: React.FC = () => {
 
       <Drawer
         title="创建/导入钱包"
-        width={520}
+        width={320}
         closable={false}
         onClose={onClose}
         open={open}
@@ -603,7 +588,12 @@ const Home: React.FC = () => {
             flex: 1,
           }}
         >
-          <div>
+          <div
+            style={{
+              flex: 1,
+              marginBottom: '20px',
+            }}
+          >
             <Button onClick={showChildrenDrawer}>
               创建新的web钱包账号
             </Button>
@@ -734,10 +724,8 @@ const Home: React.FC = () => {
         style={{
           display: 'flex',
           flexWrap: 'wrap',
-          marginTop: 40,
+          // marginTop: 20,
           marginBottom: 20,
-          marginLeft: '15%',
-          marginRight: '15%',
           alignItems: 'center',
         }}
       >
@@ -748,7 +736,8 @@ const Home: React.FC = () => {
         >
           <div
             style={{
-              textAlign: 'left',
+              textAlign: 'right',
+              minWidth: '320px',
             }}
           >
             <Image
@@ -764,6 +753,13 @@ const Home: React.FC = () => {
               NFT 是网络世界最真实的收藏品
             </p>
             <div
+              style={{
+                // minWidth: '320px',
+                float: 'right',
+                flex: 1,
+                display: 'flex',
+                marginRight: '10px',
+              }}
             >
               {/* <Button
                   style={{
@@ -804,13 +800,13 @@ const Home: React.FC = () => {
               />
               <Image
                 style={{
-                  marginLeft: '10px',
+                  marginLeft: '15px',
                 }}
                 src={createButtonStr}
                 preview={false}
-                // onClick={() => {
-                //   window.open('https://pro.ant.design/docs/getting-started');
-                // }}
+              // onClick={() => {
+              //   window.open('https://pro.ant.design/docs/getting-started');
+              // }}
               />
 
             </div>
@@ -1332,9 +1328,24 @@ const Home: React.FC = () => {
           src={logo}
           preview={false}
         >
-
         </Image>
-        We ara a lorem ipsum dolor sit amet, consectetur adipiscing elit, Ut enim ad minim veniam, quis nostrud equip consectetur adipiscing ex ea commodo dolor consequat
+        <div
+          style={{
+            marginTop: '20px',
+          }}
+        >
+          Wechat： Lepton DAO
+        </div>
+        <div>
+          Email: leptondao@163.com
+        </div>
+        <div
+          style={{
+            marginTop: '20px',
+          }}
+        >
+          © 2012-2023, All Rights Reserved
+        </div>
       </div>
 
       {/* <Card
