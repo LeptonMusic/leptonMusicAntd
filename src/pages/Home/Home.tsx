@@ -279,15 +279,21 @@ const Home: React.FC = () => {
   const importWalletOk = () => {
     setIsImportWallet(false)
     console.log('inputPrivateKey:', inputPrivateKey);
+    if (!(inputPrivateKey.startsWith('0x'))) {
+      const key = '0x' + inputPrivateKey;
+      setInputPrivateKey(key);
+      console.log(inputPrivateKey);
+    }
     try {
       const account = conflux.wallet.addPrivateKey(inputPrivateKey);
       setWalletTitle('我的钱包');
       setCfxAddress(account.address);
       setMnemonic(inputPrivateKey);
+      message.success('导入成功！');
     } catch (error) {
       message.error('私钥格式不正确，导入失败！');
     }
-    message.success('导入成功！');
+    
   }
 
   const importWalletCancel = () => {
@@ -361,6 +367,16 @@ const Home: React.FC = () => {
         </Button>
       }
     >
+      <div
+        style={{
+          marginTop: '-55px',
+          color: '#ffffff',
+          marginBottom: '30px',
+          marginLeft: '40px',
+          fontSize: '20px',
+          fontWeight: 'bold',
+        }}
+      >主页</div>
 
       {/* <div
         style={{
@@ -1312,9 +1328,24 @@ const Home: React.FC = () => {
           src={logo}
           preview={false}
         >
-
         </Image>
-        We ara a lorem ipsum dolor sit amet, consectetur adipiscing elit, Ut enim ad minim veniam, quis nostrud equip consectetur adipiscing ex ea commodo dolor consequat
+        <div
+          style={{
+            marginTop: '20px',
+          }}
+        >
+          Wechat： Lepton DAO
+        </div>
+        <div>
+          Email: leptondao@163.com
+        </div>
+        <div
+          style={{
+            marginTop: '20px',
+          }}
+        >
+          © 2012-2023, All Rights Reserved
+        </div>
       </div>
 
       {/* <Card
