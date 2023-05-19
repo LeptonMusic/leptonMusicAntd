@@ -112,7 +112,7 @@ const Home: React.FC = () => {
     const name = await contract.name();
     console.log('contractName: ', name); // MiniERC20
 
-    // const account = conflux.wallet.addPrivateKey('0xd5e1ccb96c352bfc704993f5c3fb0c657b2c80aa2d98b5eb1a7a292af16d8ee0'); 
+    // const account = conflux.wallet.addPrivateKey('0xd5e1ccb96c352bfc704993f5c3fb0c657b2c80aa2d98b5eb1a7a292af16d8ee0');
     // let receipt = await contract.mint(0, 'https://pin.ski/3HcVzxm', 'test2').sendTransaction({
     //   from: account,
     // })
@@ -155,7 +155,7 @@ const Home: React.FC = () => {
     setWalletLoading(false);
   }
 
-  //drawer 
+  //drawer
   const [myWalletOpen, setMyWalletOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [childrenDrawer, setChildrenDrawer] = useState(false);
@@ -293,7 +293,7 @@ const Home: React.FC = () => {
     } catch (error) {
       message.error('私钥格式不正确，导入失败！');
     }
-    
+
   }
 
   const importWalletCancel = () => {
@@ -647,7 +647,7 @@ const Home: React.FC = () => {
                 // setChildrenDrawer(false);
                 // setOpen(false);
                 // setIsModalOpen(false);
-                // setIsWeb3ModalOpen(true);  
+                // setIsWeb3ModalOpen(true);
 
                 // const provide = new ethers.JsonRpcProvider('http://127.0.0.1:7545');
                 // const provide = new ethers.JsonRpcProvider('https://test.confluxrpc.com');
@@ -876,7 +876,7 @@ const Home: React.FC = () => {
               marginTop: '24px',
             }}
           >
-            成为您进入web3.0门票
+           web3——定义无限可能
           </div>
           <div
             style={{
