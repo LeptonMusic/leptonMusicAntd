@@ -92,7 +92,7 @@ export default [
   // },
   {
     path: '/',
-    redirect: '/Home',
+    redirect: '/home',
   },
   {
     path: '*',

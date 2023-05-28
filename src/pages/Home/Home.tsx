@@ -7,6 +7,8 @@ import { BorderOutlined, InboxOutlined, UnderlineOutlined } from '@ant-design/ic
 import { Conflux, Wallet, Drip } from 'js-conflux-sdk';
 import { HDWallet } from '@conflux-dev/hdwallet';
 import { jsbi } from 'jsbi'
+import BlindBox from './Box'
+import TreasureChest from './TreasureChest'
 
 import type { UploadProps } from 'antd';
 import type { TabsProps } from 'antd';
@@ -19,7 +21,7 @@ import audienceStr from '../Image/audience.png'
 import investorStr from '../Image/investor.png'
 import communityStr from '../Image/community.png'
 
-import aiMusicStr from '../Image/collectNFT.svg'
+import homeNFTStr from '../Image/HomeNFT.svg'
 import homeMusicStr from '../Image/homeMusic.svg'
 import iconButton from '../Image/IconButton.svg'
 import saly01Str from '../Image/saly01.svg'
@@ -73,7 +75,7 @@ const data = [
 
 const Home: React.FC = () => {
   const { token } = theme.useToken();
-  const { initialState } = useModel('@@initialState');
+  const { initialState, setInitialState } = useModel('@@initialState');
 
   // let provider: ethers.Provider;
   // let myWallet: ethers.HDNodeWallet;
@@ -290,10 +292,22 @@ const Home: React.FC = () => {
       setCfxAddress(account.address);
       setMnemonic(inputPrivateKey);
       message.success('导入成功！');
+      saveInfoKey(account.address)
     } catch (error) {
       message.error('私钥格式不正确，导入失败！');
     }
 
+  }
+
+  const saveInfoKey = (address: string) => {
+    //保存私钥
+    let userInfo: API.CurrentUser = {
+      userid: address,
+    }
+    setInitialState((s) => ({
+      ...s,
+      currentUser: userInfo,
+    }));
   }
 
   const importWalletCancel = () => {
@@ -377,6 +391,77 @@ const Home: React.FC = () => {
           fontWeight: 'bold',
         }}
       >主页</div>
+
+      <div
+        style={{
+          textAlign: 'center',
+          marginBottom: '20px',
+        }}
+      >
+        <div
+          style={{
+            fontSize: '64px',
+            color: '#ffffff',
+            marginBottom: '10px',
+          }}
+        >
+          非凡医者联动活动
+        </div>
+
+        <div
+          style={{
+            fontSize: '32px',
+            color: '#ffffff',
+            marginBottom: '10px',
+            textAlign: 'center',
+            display: 'flex',
+            flexWrap: 'wrap',
+          }}
+        >
+          <div
+            style={{
+              fontSize: '32px',
+              color: '#ffffff',
+              marginBottom: '10px',
+              textAlign: 'center',
+              flex: 1,
+              minWidth: '200px',
+            }}
+          >
+            
+            九宫格抽奖
+            <div
+              style={{
+                marginTop: '10px',
+                justifyContent: 'center',
+                display: 'flex',
+              }}>
+                <BlindBox></BlindBox>
+              
+            </div>
+
+          </div>
+          <div
+            style={{
+              marginTop: '10px',
+              fontSize: '32px',
+              color: '#ffffff',
+              flex: 1,
+              minWidth: '300px',
+            }}
+          >
+            开盲盒
+            <div
+              style={{
+                
+                justifyContent: 'center',
+                display: 'flex',
+              }}>
+              <TreasureChest></TreasureChest>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* <div
         style={{
@@ -672,6 +757,7 @@ const Home: React.FC = () => {
                 setMnemonic(wallet.privateKey);
                 setWalletTitle('我的钱包');
                 setCfxAddress(account.address);
+                saveInfoKey(account.address);
               }}
             >
               抽取您的web3钱包账号助记词
@@ -741,7 +827,7 @@ const Home: React.FC = () => {
             }}
           >
             <Image
-              src={aiMusicStr}
+              src={homeNFTStr}
               preview={false}
             ></Image>
             <p
@@ -876,7 +962,7 @@ const Home: React.FC = () => {
               marginTop: '24px',
             }}
           >
-           web3——定义无限可能
+            web3——定义无限可能
           </div>
           <div
             style={{
@@ -1079,9 +1165,6 @@ const Home: React.FC = () => {
                   <Image
                     src={beginTimeStr}
                     preview={false}
-                    onClick={() => {
-                      window.open('https://pro.ant.design/docs/getting-started');
-                    }}
                   />
                   <Image
                     style={{
@@ -1089,9 +1172,6 @@ const Home: React.FC = () => {
                     }}
                     src={buyButtonStr}
                     preview={false}
-                    onClick={() => {
-                      window.open('https://pro.ant.design/docs/getting-started');
-                    }}
                   />
                 </div>
               </Card>
